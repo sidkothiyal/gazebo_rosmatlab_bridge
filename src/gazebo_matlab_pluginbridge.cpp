@@ -222,22 +222,22 @@ namespace gazebo
             case SCREW :
             case REVOLUTE :
               //gzdbg<<"Joint Angle: "<<joint_state.angle.x<<"\t"<<joint_state.vel_angle.x<<std::endl;
-              joint->SetAngle(0,joint_state.angle.x);
+              joint->SetPosition(0,joint_state.angle.x);
               joint->SetVelocity(0,joint_state.vel_angle.x);
               //gzdbg<<"Joint Angle after setting: "<<joint->GetAngle(0).Radian()<<"\t"<<joint->GetVelocity(0)<<endl;
 
               break;
             case UNIVERSAL :
             case REVOLUTE2 :
-              joint->SetAngle(0,joint_state.angle.x);
-              joint->SetAngle(1,joint_state.angle.y);
+              joint->SetPosition(0,joint_state.angle.x);
+              joint->SetPosition(1,joint_state.angle.y);
               joint->SetVelocity(0,joint_state.vel_angle.x);
               joint->SetVelocity(1,joint_state.vel_angle.y);
               break;
             case BALL :
-              joint->SetAngle(0,joint_state.angle.x);
-              joint->SetAngle(1,joint_state.angle.y);
-              joint->SetAngle(2,joint_state.angle.z);
+              joint->SetPosition(0,joint_state.angle.x);
+              joint->SetPosition(1,joint_state.angle.y);
+              joint->SetPosition(2,joint_state.angle.z);
               joint->SetVelocity(0,joint_state.vel_angle.x);
               joint->SetVelocity(1,joint_state.vel_angle.y);
               joint->SetVelocity(2,joint_state.vel_angle.z);
@@ -247,7 +247,7 @@ namespace gazebo
         /*if(world)
           {
           updatingjoint = true;//Stops the callbacks in updateworld until joint is updated
-          world->StepWorld(1);//Step Once Check why it is breaking
+          world->Step(1);//Step Once Check why it is breaking
           }
          */
         //usleep(5000);//1ms sleep (Check if this is enough)
@@ -455,7 +455,7 @@ namespace gazebo
       //forloop
       //Perturb and copy the control  to jointeffort_msg and bodywrenches_msg
       //Run the world by 1 step
-      world->StepWorld(1);
+      world->Step(1);
       //Evaluate Link and joint states
       findlinkandjointstatus(link_states, joint_states);
       //Find the Gradient based on reading link and joint states
@@ -542,7 +542,7 @@ namespace gazebo
             start = std::clock();
             //start_worldupdate = std::clock();
             //gzdbg<<"Time :"<<gazebo::common::Time::GetWallTime()<<endl;
-            world->StepWorld(nofsteps);
+            world->Step(nofsteps);
             //world->SetPaused(false);
             //world->Step(nofsteps);
             //gzdbg << "Time: " << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000000) << " microsec" << std::endl;
